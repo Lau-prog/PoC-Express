@@ -24,9 +24,9 @@ Esta organización permite que el equipo que trabaja con Express siga el **mismo
 
 ## 🚀 Instalación
 
-1. Clonar el repositorio:
+Clonar el repositorio:
 ```
-git clone <url-del-repo>
+git clone https://github.com/Lau-prog/PoC-Express
 cd express-poc
 ```
 Instalar dependencias:
@@ -56,11 +56,11 @@ pnpm start
 
 Auth
 ```
-auth
   POST /api/auth/register → Registro de usuario
   POST /api/auth/login → Login y obtención de JWT
-
+```
 Tasks (requiere autenticación)
+```
   POST /api/tasks → Crear tarea
   GET /api/tasks → Listar tareas del usuario autenticado
   GET /api/tasks/:id → Obtener tarea por ID
