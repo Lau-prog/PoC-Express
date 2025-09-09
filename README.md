@@ -7,15 +7,34 @@ Este repositorio contiene la **implementación base en Express.js**, usando Type
 
 ## 📂 Estructura del proyecto
 ```
-src/
-├── config/ # Configuración (BD, variables de entorno, etc.)
-├── controllers/ # Lógica de controladores (equivalente a Controllers en Nest)
-├── services/ # Lógica de negocio (equivalente a Providers/Services en Nest)
-├── models/ # Modelos y esquemas de datos (Mongoose)
-├── routes/ # Definición de rutas y agrupación por módulo
-├── middleware/ # Middleware globales y de autorización (equivalente a Guards en Nest)
-├── validators/ # Validadores/DTOs (Zod)
-└── index.ts # Punto de entrada
+express-poc/
+├─ package.json
+├─ tsconfig.json
+├─ prisma/
+│  ├─ schema.prisma
+│  └─ migrations/
+├─ src/
+│  ├─ config/
+│  │  └─ db.ts                 
+│  ├─ middleware/
+│  │  └─ logger.ts
+│  ├─ modules/
+│  │  ├─ hello/
+│  │  │  ├─ hello.router.ts
+│  │  │  └─ hello.controller.ts
+│  │  ├─ users/
+│  │  │  ├─ users.router.ts
+│  │  │  ├─ users.service.ts
+│  │  │  └─ dto/
+│  │  └─ tasks/
+│  │     ├─ tasks.router.ts
+│  │     ├─ tasks.service.ts
+│  │     └─ dto/
+│  ├─ routes.ts                # Agrega todos los routers
+│  ├─ app.ts                   # Crea app express y middlewares
+│  └─ server.ts                # Inicia el servidor (app.listen)
+└─ test/
+   └─ app.e2e-spec.ts
 ```
 
 Esta organización permite que el equipo que trabaja con Express siga el **mismo patrón de trabajo** que el equipo de NestJS, cambiando únicamente el framework y las herramientas propias de cada uno.
