@@ -1,24 +1,22 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import connectDB from './config/db';
-import authRoutes from './routes/auth.routes';
-import tasksRoutes from './routes/tasks.routes';
+import { logger } from './middleware/logger';
+import registerRoutes from './routes';
 
 dotenv.config();
-const PORT = process.env.PORT || 4000;
-const app = express();
 
+const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(logger);
 
-connectDB();
+registerRoutes(app);
 
-app.get('/', (_, res) => res.send('Tasks POC - Express + TS'));
-
-app.use('/api/auth', authRoutes);
-app.use('/api/tasks', tasksRoutes);
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+// error handler
+app.use((err: any, _req: any, res: any, _next: any) => {
+  console.error(err);
+  res.status(500).json({ message: 'Internal Server Error' });
 });
+
+export default app;
