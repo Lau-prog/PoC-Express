@@ -1,22 +1,17 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import { logger } from './middleware/logger';
-import registerRoutes from './routes';
+import express from 'express'
+import { userRouter } from "./user/user.routes.js"
+import { taskRouter } from "./task/task.routes.js"
+import { loggerMiddleware } from './middleware/logger.middleware.js'
 
-dotenv.config();
+const app = express()
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(logger);
+app.use(loggerMiddleware)
 
-registerRoutes(app);
+app.use(express.json())
 
-// error handler
-app.use((err: any, _req: any, res: any, _next: any) => {
-  console.error(err);
-  res.status(500).json({ message: 'Internal Server Error' });
-});
+app.use('/api/users', userRouter)
+app.use('/api/tasks', taskRouter)
 
-export default app;
+app.listen(3000, () => {
+  console.log('Servidor andando')
+})
