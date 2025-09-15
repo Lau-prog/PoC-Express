@@ -1,33 +1,30 @@
 {
-  "name": "express-poc",
+  "name": "poc",
   "version": "1.0.0",
-  "type": "module",
   "description": "",
-  "main": "app.js",
+  "type": "module",
+  "main": "app.ts",
   "scripts": {
-    "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\""
+    "build": "tsc -p ./tsconfig.json",
+    "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\"",
+    "prisma:generate": "prisma generate --schema=Prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --name init --schema=Prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@prisma/client": "^6.15.0",
-    "bcryptjs": "^3.0.2",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.2",
-    "express": "4.18.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongodb": "6.1.0"
-  },
+  "packageManager": "pnpm@10.15.1",
   "devDependencies": {
-    "@types/bcryptjs": "^3.0.0",
-    "@types/cors": "^2.8.19",
-    "@types/express": "4.17.17",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "20.5.0",
+    "@types/express": "5.0.3",
+    "@types/node": "24.3.1",
+    "express": "^5.1.0",
     "prisma": "^6.15.0",
-    "ts-node-dev": "^2.0.0",
-    "tsc-watch": "6.0.4",
-    "typescript": "5.1.6"
+    "tsc-watch": "^7.1.1",
+    "tsx": "4.20.5",
+    "typescript": "5.9.2"
+  },
+  "dependencies": {
+    "@prisma/client": "6.15.0",
+    "express-validator": "7.2.1"
   }
 }
