@@ -5,7 +5,10 @@
   "type": "module",
   "main": "app.ts",
   "scripts": {
-    "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\""
+    "build": "tsc -p ./tsconfig.json",
+    "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\"",
+    "prisma:generate": "prisma generate --schema=Prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --name init --schema=Prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +19,7 @@
     "@types/node": "24.3.1",
     "express": "^5.1.0",
     "prisma": "^6.15.0",
+    "tsc-watch": "^7.1.1",
     "tsx": "4.20.5",
     "typescript": "5.9.2"
   },
