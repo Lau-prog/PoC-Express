@@ -6,6 +6,7 @@ Este repositorio contiene la **implementación base en Express.js**, usando Type
 ---
 
 ## 📂 Estructura del proyecto
+
 ```
 express-poc/
 ├─ package.json
@@ -14,30 +15,20 @@ express-poc/
 │  ├─ schema.prisma
 │  └─ migrations/
 ├─ src/
-│  ├─ config/
-│  │  └─ db.ts                 
 │  ├─ middleware/
-│  │  └─ logger.ts
+│  │  └─ logger.middleware.ts
 │  ├─ modules/
-│  │  ├─ hello/
-│  │  │  ├─ hello.router.ts
-│  │  │  └─ hello.controller.ts
 │  │  ├─ users/
-│  │  │  ├─ users.router.ts
-│  │  │  ├─ users.service.ts
-│  │  │  └─ dto/
+│  │  │  ├─ user.controller.ts
+│  │  │  ├─ user.entity.ts
+│  │  │  └─ user.routes.ts
 │  │  └─ tasks/
-│  │     ├─ tasks.router.ts
-│  │     ├─ tasks.service.ts
-│  │     └─ dto/
-│  ├─ routes.ts                # Agrega todos los routers
-│  ├─ app.ts                   # Crea app express y middlewares
-│  └─ server.ts                # Inicia el servidor (app.listen)
-└─ test/
-   └─ app.e2e-spec.ts
-```
+│  │     ├─ task.controller.ts
+│  │     ├─ task.entity.ts
+│  │     └─ task.routes.ts
+│  ├─ app.ts
 
-Esta organización permite que el equipo que trabaja con Express siga el **mismo patrón de trabajo** que el equipo de NestJS, cambiando únicamente el framework y las herramientas propias de cada uno.
+Esta organización permite que el equipo que trabaja con Express siga un patrón de trabajo similar al que emplea el equipo de NestJS, pero aplicando las herramientas y utilidades del framework Express.
 
 ---
 
@@ -45,46 +36,61 @@ Esta organización permite que el equipo que trabaja con Express siga el **mismo
 
 Clonar el repositorio:
 ```
+
 git clone https://github.com/Lau-prog/PoC-Express
 cd express-poc
+
 ```
 Instalar dependencias:
 ```
+
 pnpm install
+
 ```
 Configurar variables de entorno:
 ```
+
 cp .env.example .env
+
 ```
 Editar .env con tus valores:
 ```
+
 PORT=4000
-MONGO_URI=mongodb://localhost:27017/tasks_poc
 JWT_SECRET=tu_secreto_super_seguro
+
 ```
 Ejecutar en modo desarrollo:
 ```
-pnpm dev
+
+pnpm run start:dev
+
 ```
 Build para producción:
 ```
+
 pnpm build
 pnpm start
+
 ```
 📌 Endpoints esperados en la PoC
 
 Auth
 ```
-  POST /api/auth/register → Registro de usuario
-  POST /api/auth/login → Login y obtención de JWT
+
+POST /api/auth/register → Registro de usuario
+POST /api/auth/login → Login y obtención de JWT
+
 ```
 Tasks (requiere autenticación)
 ```
-  POST /api/tasks → Crear tarea
-  GET /api/tasks → Listar tareas del usuario autenticado
-  GET /api/tasks/:id → Obtener tarea por ID
-  PUT /api/tasks/:id → Editar tarea (no permite editar si está completada)
-  DELETE /api/tasks/:id → Eliminar tarea
+
+POST /api/tasks → Crear tarea
+GET /api/tasks → Listar tareas del usuario autenticado
+GET /api/tasks/:id → Obtener tarea por ID
+PUT /api/tasks/:id → Editar tarea (no permite editar si está completada)
+DELETE /api/tasks/:id → Eliminar tarea
+
 ```
 🧪 Testing
 
@@ -101,17 +107,18 @@ El objetivo de esta prueba de concepto es comparar Express.js y NestJS evaluando
     - Mantenibilidad
     - Facilidad de desarrollo
     - Curva de aprendizaje
-    - Integración con MongoDB, JWT y validación de datos
+    - Integración con Prisma, JWT y validación de datos
 
 Para garantizar una comparación justa, se han establecido las siguientes consideraciones:
     - Ambos en TypeScript
-    - Misma estructura modular
-    - Validación de datos con Zod (equivalente a DTOs de Nest)
+    - Similar estructura modular
+    - Validación de datos con Express-Validator (equivalente a DTOs de Nest)
     - Middleware en Express equivalentes a Guards de Nest
     - Uso de la misma base de datos y librerías auxiliares
     - Tests con Jest en ambos
 
 ## 📄 Licencia
 
-Este proyecto se distribuye bajo la licencia MIT.  
+Este proyecto se distribuye bajo la licencia MIT.
 Podés usarlo, modificarlo y distribuirlo libremente, siempre incluyendo el aviso de licencia original.
+```
