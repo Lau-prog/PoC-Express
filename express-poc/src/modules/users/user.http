@@ -9,6 +9,6 @@ POST http://localhost:4000/api/users
 Content-Type: application/json
 
 {
-  "email": "bruno@gmail.com",
-  "name": "Bruno"
+  "email": "brun@gmail.com",
+  "name": "Brun"
 }

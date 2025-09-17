@@ -8,16 +8,22 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String
-  tasks     Task[]
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  name  String
+  tasks Task[]
+}
+
+enum EstadoTask {
+  PENDIENTE
+  COMPLETO
 }
 
 model Task {
-  id               Int      @id @default(autoincrement())
-  title            String   
-  description      String
-  iduser           Int
-  user             User   @relation(fields: [iduser], references: [id])
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String
+  iduser      Int
+  user        User       @relation(fields: [iduser], references: [id])
+  estado      EstadoTask @default(PENDIENTE)
 }
