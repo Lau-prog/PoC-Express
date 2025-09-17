@@ -13,3 +13,15 @@ Content-Type: application/json
   "description": "hola",
   "iduser": "1"
 }
+
+### PATCH update task 
+PATCH http://localhost:4000/api/tasks/1
+Content-Type: application/json
+
+{
+  "title" :"tituloo"
+}
+
+### PATCH update estado task completado 
+PATCH http://localhost:4000/api/tasks/1/complete
+Content-Type: application/json

@@ -11,6 +11,7 @@ CREATE TABLE "Task" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "iduser" INTEGER NOT NULL,
+    "estado" TEXT NOT NULL DEFAULT 'PENDIENTE',
     CONSTRAINT "Task_iduser_fkey" FOREIGN KEY ("iduser") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 

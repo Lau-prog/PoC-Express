@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { Task } from './task.entity.js';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, EstadoTask } from '@prisma/client';
 import { body, validationResult } from 'express-validator';
 import type { Schema } from 'express-validator';
 
@@ -118,6 +118,66 @@ export async function createTask(req: Request, res: Response) {
     });
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
+  }
+}
+
+export async function completeTask(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id);
+
+    if (Number.isNaN(id)) {
+      return res.status(400).json({ message: 'Invalid task id' });
+    }
+
+    const task = await prisma.task.findUnique({ where: { id } });
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    if (task.estado === EstadoTask.COMPLETO) {
+      return res.status(200).json({
+        message: 'Task already completed',
+        data: task,
+      });
+    }
+
+    const updated = await prisma.task.update({
+      where: { id },
+      data: { estado: EstadoTask.COMPLETO },
+    });
+
+    return res.status(200).json({
+      message: 'Task completed',
+      data: updated,
+    });
+  } catch (err: any) {
+    return res.status(500).json({ message: err.message });
+  }
+}
+
+export async function validacionEstado(req: Request, res: Response, next: NextFunction) {
+  try {
+    const id = Number(req.params.id);
+
+    if (Number.isNaN(id)) {
+      return res.status(400).json({ message: 'Invalid task id' });
+    }
+
+    const task = await prisma.task.findUnique({ where: { id }, select: {id: true,title: true,description: true,iduser: true,estado: true, },});
+
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    if (task.estado === EstadoTask.COMPLETO) {
+      return res.status(409).json({
+        message: 'Task already completed and locked. No further modifications allowed.',
+      });
+    }
+
+    next();
+  } catch (err) {
+    next(err);
   }
 }
 
